@@ -13,6 +13,74 @@
 
     <script>
 
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      context.fillStyle = "blue";
+      context.fillRect(50, 50, 900, 500);
+
+      class Player {
+        constructor(x, y, width, height) {
+          this.x = x;
+          this.y = y;
+          this.width = width;
+          this.height = height;
+        }
+      }
+
+      class Computer {
+        constructor(x, y, width, height) {
+          this.x = x;
+          this.y = y;
+          this.width = width;
+          this.height = height;
+        }
+      }
+
+      class Ball {
+        constructor(x, y, radius, startAngle, endAngle) {
+          this.x = x;
+          this.y = y;
+          this.radius = radius;
+          this.startAngle = startAngle;
+          this.endAngle = endAngle;
+        }
+      }
+
+      Player.prototype.render = function render() {
+        var playerCanvas = document.getElementById("myCanvas");
+        var playerContext = playerCanvas.getContext('2d');
+        playerContext.fillStyle = "black";
+        return playerContext.fillRect(this.x, this.y, this.width, this.height);
+      }
+
+      Computer.prototype.render = function render() {
+        var computerCanvas = document.getElementById("myCanvas");
+        var computerContext = computerCanvas.getContext('2d');
+        computerContext.fillStyle = "black";
+        return computerContext.fillRect(this.x, this.y, this.width, this.height);
+      }
+
+      Ball.prototype.render = function render() {
+        var ballCanvas = document.getElementById("myCanvas");
+        var ballContext = ballCanvas.getContext('2d');
+        ballContext.beginPath();
+        ballContext.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle);
+        ballContext.fillStyle = "#fff";
+        return ballContext.fill();
+      }
+
+      var player = new Player(900, 25, 50, 150);
+      var computer = new Computer(50, 25, 50, 150)
+      var ball = new Ball(500, 200, 50, 0, 2 * Math.PI);
+
+      const render = () => {
+        player.render();
+        computer.render();
+        ball.render();
+      }
+
+      window.onload = render;
+
     </script>
   </body>
 </html>
