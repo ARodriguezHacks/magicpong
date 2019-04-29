@@ -13,79 +13,10 @@
 
     <script>
 
-<<<<<<< HEAD
-      var canvas = document.getElementById('myCanvas');
-      var context = canvas.getContext('2d');
-      context.fillStyle = "blue";
-      context.fillRect(50, 50, 900, 500);
-
-      class Player {
-        constructor(x, y, width, height) {
-          this.x = x;
-          this.y = y;
-          this.width = width;
-          this.height = height;
-        }
-      }
-
-      class Computer {
-        constructor(x, y, width, height) {
-          this.x = x;
-          this.y = y;
-          this.width = width;
-          this.height = height;
-        }
-      }
-
-      class Ball {
-        constructor(x, y, radius, startAngle, endAngle) {
-          this.x = x;
-          this.y = y;
-          this.radius = radius;
-          this.startAngle = startAngle;
-          this.endAngle = endAngle;
-        }
-      }
-
-      Player.prototype.render = function render() {
-        var playerCanvas = document.getElementById("myCanvas");
-        var playerContext = playerCanvas.getContext('2d');
-        playerContext.fillStyle = "black";
-        return playerContext.fillRect(this.x, this.y, this.width, this.height);
-      }
-
-      Computer.prototype.render = function render() {
-        var computerCanvas = document.getElementById("myCanvas");
-        var computerContext = computerCanvas.getContext('2d');
-        computerContext.fillStyle = "black";
-        return computerContext.fillRect(this.x, this.y, this.width, this.height);
-      }
-
-      Ball.prototype.render = function render() {
-        var ballCanvas = document.getElementById("myCanvas");
-        var ballContext = ballCanvas.getContext('2d');
-        ballContext.beginPath();
-        ballContext.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle);
-        ballContext.fillStyle = "#fff";
-        return ballContext.fill();
-      }
-
-      var player = new Player(900, 25, 50, 150);
-      var computer = new Computer(50, 25, 50, 150)
-      var ball = new Ball(500, 200, 50, 0, 2 * Math.PI);
-
-      const render = () => {
-        player.render();
-        computer.render();
-        ball.render();
-      }
-
-      window.onload = render;
-=======
-    var canvas = document.getElementById('myCanvas');
-    var context = canvas.getContext('2d');
-    context.fillStyle = "blue";
-    context.fillRect(50, 50, 900, 500);
+    //var canvas = document.getElementById('myCanvas');
+    //var context = canvas.getContext('2d');
+    //context.fillStyle = "blue";
+    //context.fillRect(50, 50, 900, 500);
 
     class Paddle {
       constructor(x, y, width, height, speed) {
@@ -121,26 +52,9 @@
       }
     }
 
-    function movePaddle(e) {
-
-    }
-
     Paddle.prototype.move = function move(paddle) {
-      var paddleCanvas = document.getElementById("myCanvas");
-      var paddleContext = paddleCanvas.getContext('2d');
-      paddleContext.globalCompositeOperation = 'copy';
-      paddleContext.clearRect(0, 0, 1000, 630);
-
-      paddleContext.fillStyle = "blue";
-      context.fillRect(50, 50, 900, 500);
-      paddleContext.save();
-      paddleContext.translate(0, 10); 
-
-      };
-
-      //('keydown', function (event) {
-        //return paddleContext.fillRect(this.x, (this.y + 10), this.width, this.height);
-      //});
+      this.y += this.speed;
+    };
 
     Player.prototype.render = function render() {
       var playerCanvas = document.getElementById("myCanvas");
@@ -161,7 +75,7 @@
       var ballContext = ballCanvas.getContext('2d');
       ballContext.beginPath();
       ballContext.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle);
-      ballContext.fillStyle = "#fff";
+      ballContext.fillStyle = "#00f";
       return ballContext.fill();
     }
 
@@ -175,36 +89,26 @@
       ball.render();
     }
 
-    var animate = window.requestAnimationFrame(step());
+    var animate = window.requestAnimationFrame(step);
 
     function step(timestamp) {
-      //var ctx = document.getElementById('canvas').getContext('2d');
-      //ctx.clearRect(0, 0, 900, 500)
-
-      //ctx.fillStyle = "blue";
-      //ctx.fillRect(50, 50, 900, 500);
-      //window.requestAnimationFrame(step);
+      window.setTimeout(step, 1000/60);
       render();
-      //window.setTimeout(step(), 1000/60);
-      animate();
+      animate(step);
     }
 
-    window.onload = animate();
+    window.addEventListener('keydown', function(event) {
+     const keyName = event.key;
+     ctx = document.getElementById("myCanvas").getContext('2d');
+     ctx.clearRect(0, 0, 1000, 630);
+     if (keyName === "ArrowUp") {
+       player.move();
+     } else if (keyName === "ArrowDown") {
+       console.log("Arrow Key Down works")
+     }
+    });
 
-    //window.addEventListener('keydown', function(event) {
-      //const keyName = event.key;
-
-      //if (keyName === "ArrowUp") {
-        //console.log("Arrow Key Up works");
-      //} else if (keyName === "ArrowDown") {
-      //  console.log("Arrow Key Down works")
-      //}
-
-    //});
-      //function(callback) { window.setTimeout(step(), 1000/60) };
-
-  //  window.onload;
->>>>>>> In progress code for paddle control
+   window.onload = animate;
 
     </script>
   </body>
