@@ -9,14 +9,9 @@
     </style>
   </head>
   <body>
-    <canvas id="myCanvas" width="1000" height="630" style="border-style:dashed; margin: 35px auto; display:block;"></canvas>
+    <canvas id="myCanvas" width="1000" height="610" style="border-style:dashed; margin: 35px auto; display:block;"></canvas>
 
     <script>
-
-    //var canvas = document.getElementById('myCanvas');
-    //var context = canvas.getContext('2d');
-    //context.fillStyle = "blue";
-    //context.fillRect(50, 50, 900, 500);
 
     class Paddle {
       constructor(x, y, width, height, speed) {
@@ -24,7 +19,7 @@
         this.y = y;
         this.width = width;
         this.height = height;
-        this.speed = 10;
+        this.speed = speed;
       }
     }
 
@@ -52,7 +47,8 @@
       }
     }
 
-    Paddle.prototype.move = function move(paddle) {
+    Paddle.prototype.move = function move(speed) {
+      this.speed = speed;
       this.y += this.speed;
     };
 
@@ -89,10 +85,10 @@
       ball.render();
     }
 
-    var animate = window.requestAnimationFrame(step);
+    var animate = window.requestAnimationFrame ||
+        function(callback) { window.setTimeout(callback, 1000/60) };
 
     function step(timestamp) {
-      window.setTimeout(step, 1000/60);
       render();
       animate(step);
     }
@@ -100,15 +96,19 @@
     window.addEventListener('keydown', function(event) {
      const keyName = event.key;
      ctx = document.getElementById("myCanvas").getContext('2d');
-     ctx.clearRect(0, 0, 1000, 630);
-     if (keyName === "ArrowUp") {
-       player.move();
-     } else if (keyName === "ArrowDown") {
-       console.log("Arrow Key Down works")
+     ctx.clearRect(0, 0, 1000, 610);
+     if (keyName === "ArrowDown") {
+       if (player.y < 460) {
+         player.move(10);
+       }
+     } else if (keyName === "ArrowUp") {
+       if (player.y > 0) {
+         player.move(-10);
+       }
      }
     });
 
-   window.onload = animate;
+   window.onload = animate(step);
 
     </script>
   </body>
