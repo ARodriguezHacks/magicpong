@@ -9,77 +9,142 @@
     </style>
   </head>
   <body>
-    <canvas id="myCanvas" width="1000" height="630" style="border-style:dashed; margin: 35px auto; display:block;"></canvas>
+    <canvas id="myCanvas" width="1000" height="610" style="border-style:dashed; margin: 35px auto; display:block;"></canvas>
 
     <script>
 
-      var canvas = document.getElementById('myCanvas');
-      var context = canvas.getContext('2d');
-      context.fillStyle = "blue";
-      context.fillRect(50, 50, 900, 500);
+    class Paddle {
+      constructor(x, y, width, height, speed) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.speed = speed;
+        this.vx = 5;
+        this.vy = 2;
+      }
+    }
 
-      class Player {
-        constructor(x, y, width, height) {
-          this.x = x;
-          this.y = y;
-          this.width = width;
-          this.height = height;
-        }
+    class Player extends Paddle {
+      constructor(x, y, width, height) {
+        super(x, y, width, height);
+        this.name = "Player";
+      }
+    }
+
+    class Computer extends Paddle {
+      constructor(x, y, width, height) {
+        super(x, y, width, height);
+        this.name = "Computer";
+      }
+    }
+
+    class Ball {
+      constructor(radius, startAngle, endAngle) {
+        this.radius = radius;
+        this.startAngle = startAngle;
+        this.endAngle = endAngle;
+        this.speed = Math.random() * 10;
+        this.x = Math.random() * 900;
+        this.y = Math.random() * 500;
+        this.vx = 5;
+        this.vy = 2;
+        //this.direction = Math.random() * 900;
+      }
+    }
+
+    Paddle.prototype.move = function move(speed) {
+      this.speed = speed;
+      this.y += this.speed;
+    }
+
+    Player.prototype.render = function render() {
+      var playerCanvas = document.getElementById("myCanvas");
+      var playerContext = playerCanvas.getContext('2d');
+      playerContext.fillStyle = "black";
+      return playerContext.fillRect(this.x, this.y, this.width, this.height);
+    }
+
+    Computer.prototype.render = function render() {
+      var computerCanvas = document.getElementById("myCanvas");
+      var computerContext = computerCanvas.getContext('2d');
+      computerContext.fillStyle = "black";
+      return computerContext.fillRect(this.x, this.y, this.width, this.height);
+    }
+
+    Ball.prototype.render = function render() {
+      var ballCanvas = document.getElementById("myCanvas");
+      var ballContext = ballCanvas.getContext('2d');
+      ballContext.beginPath();
+      ballContext.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle);
+      ballContext.fillStyle = "#00f";
+      ballContext.fill();
+    }
+
+    var player = new Player(900, 25, 50, 150);
+    var computer = new Computer(50, 25, 50, 150)
+    var ball = new Ball(50, 0, 2 * Math.PI);
+
+    var canvas = document.getElementById('myCanvas');
+
+    canvas.addEventListener('load', function(event) {
+      window.requestAnimationFrame(moveBall);
+    });
+
+    const render = () => {
+      player.render();
+      computer.render();
+      ball.render();
+      //moveBall();
+    }
+
+    const moveBall = () => {
+      var ctx = document.getElementById("myCanvas").getContext('2d');
+      ctx.clearRect(0, 0, 1000, 610);
+      render();
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+
+      if (ball.y + ball.vy > (canvas.height - 35) ||
+          ball.y + ball.vy < 35) {
+            ball.vy = -ball.vy;
       }
 
-      class Computer {
-        constructor(x, y, width, height) {
-          this.x = x;
-          this.y = y;
-          this.width = width;
-          this.height = height;
-        }
+      if (ball.x + ball.vx > (canvas.width - 35) ||
+          ball.x + ball.vx < 35) {
+            ball.vx = -ball.vx;
       }
+      //var ballBounce = window.requestAnimationFrame(moveBall);
+    }
 
-      class Ball {
-        constructor(x, y, radius, startAngle, endAngle) {
-          this.x = x;
-          this.y = y;
-          this.radius = radius;
-          this.startAngle = startAngle;
-          this.endAngle = endAngle;
-        }
-      }
+    var animate = window.requestAnimationFrame ||
+        function(callback) { window.setTimeout(callback, 1000/60) };
 
-      Player.prototype.render = function render() {
-        var playerCanvas = document.getElementById("myCanvas");
-        var playerContext = playerCanvas.getContext('2d');
-        playerContext.fillStyle = "black";
-        return playerContext.fillRect(this.x, this.y, this.width, this.height);
-      }
+    function step(timestamp) {
+      render();
+      //moveBall();
+      animate(step);
+      animate(moveBall);
+    }
 
-      Computer.prototype.render = function render() {
-        var computerCanvas = document.getElementById("myCanvas");
-        var computerContext = computerCanvas.getContext('2d');
-        computerContext.fillStyle = "black";
-        return computerContext.fillRect(this.x, this.y, this.width, this.height);
-      }
+    window.addEventListener('keydown', function(event) {
+     const keyName = event.key;
+     ctx = document.getElementById("myCanvas").getContext('2d');
+     ctx.clearRect(0, 0, 1000, 610);
+     if (keyName === "ArrowDown") {
+       if (player.y < 460) {
+         player.move(10);
+       }
+     } else if (keyName === "ArrowUp") {
+       if (player.y > 0) {
+         player.move(-10);
+       }
+     }
+    });
 
-      Ball.prototype.render = function render() {
-        var ballCanvas = document.getElementById("myCanvas");
-        var ballContext = ballCanvas.getContext('2d');
-        ballContext.beginPath();
-        ballContext.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle);
-        ballContext.fillStyle = "#fff";
-        return ballContext.fill();
-      }
+    //window.addEventListener('load', function)
 
-      var player = new Player(900, 25, 50, 150);
-      var computer = new Computer(50, 25, 50, 150)
-      var ball = new Ball(500, 200, 50, 0, 2 * Math.PI);
-
-      const render = () => {
-        player.render();
-        computer.render();
-        ball.render();
-      }
-
-      window.onload = render;
+   window.onload = animate(step);
 
     </script>
   </body>
