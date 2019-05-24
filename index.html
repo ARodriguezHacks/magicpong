@@ -13,13 +13,17 @@
 
     <script>
 
+    var canvas = document.getElementById('myCanvas');
+
     class Paddle {
       constructor(x, y, width, height, speed) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.speed = speed;
+        this.speed = 50;
+        this.vx = 5;
+        this.vy = 2;
       }
     }
 
@@ -38,32 +42,36 @@
     }
 
     class Ball {
-      constructor(x, y, radius, startAngle, endAngle) {
-        this.x = x;
-        this.y = y;
+      constructor(radius, startAngle, endAngle) {
         this.radius = radius;
         this.startAngle = startAngle;
         this.endAngle = endAngle;
+        this.x = Math.random() * 800;
+        this.y = Math.random() * 500;
+        this.vx = 5;
+        this.vy = -2;
       }
     }
 
     Paddle.prototype.move = function move(speed) {
       this.speed = speed;
       this.y += this.speed;
-    };
+    }
 
     Player.prototype.render = function render() {
       var playerCanvas = document.getElementById("myCanvas");
       var playerContext = playerCanvas.getContext('2d');
       playerContext.fillStyle = "black";
-      return playerContext.fillRect(this.x, this.y, this.width, this.height);
+      playerContext.fillRect(this.x, this.y, this.width, this.height);
+      playerContext.closePath();
     }
 
     Computer.prototype.render = function render() {
       var computerCanvas = document.getElementById("myCanvas");
       var computerContext = computerCanvas.getContext('2d');
       computerContext.fillStyle = "black";
-      return computerContext.fillRect(this.x, this.y, this.width, this.height);
+      computerContext.fillRect(this.x, this.y, this.width, this.height);
+      computerContext.closePath();
     }
 
     Ball.prototype.render = function render() {
@@ -72,12 +80,64 @@
       ballContext.beginPath();
       ballContext.arc(this.x, this.y, this.radius, this.startAngle, this.endAngle);
       ballContext.fillStyle = "#00f";
-      return ballContext.fill();
+      ballContext.fill();
+      ballContext.closePath();
+    }
+
+    Ball.prototype.update = function update() {
+      this.x += this.vx;
+      this.y += this.vy;
+    }
+
+    Ball.prototype.move = function move() {
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, 1000, 610);
+      render();
+
+      var num = Math.floor(Math.random()*7) + 1;
+      num *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
+
+      if (this.y + this.vy > (canvas.height - 35) ||
+          this.y + this.vy < 35) {
+            this.vy = -this.vy;
+      }
+
+      if (this.x + this.vx > canvas.width ||
+        this.x + this.vx < 0) {
+          this.x = 500;
+          this.y = 305;
+          this.vx = num;
+          this.vy = num;
+        }
+    }
+
+    function collision(ball, player, computer) {
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+      var left_x = ball.x - 50;
+      var right_x = ball.x + 50;
+      var top_y = ball.y - 50;
+      var bottom_y = ball.y + 50;
+
+      if (ball.vx > 0) {
+        if (left_x < (player.x + player.width) && right_x > player.x && top_y < (player.y + player.height) && bottom_y > player.y) {
+          ball.vx = -ball.vx;
+          ball.vy += (player.vy / 2);
+          ball.x += ball.vx;
+        }
+      } else {
+        if (left_x < (computer.x + computer.width) && right_x > computer.x && top_y < (computer.y + computer.height) && bottom_y > computer.y) {
+          ball.vx = -ball.vx;
+          ball.vy += (computer.vy / 2);
+          ball.x += ball.vx;
+        }
+      }
     }
 
     var player = new Player(900, 25, 50, 150);
     var computer = new Computer(50, 25, 50, 150)
-    var ball = new Ball(500, 200, 50, 0, 2 * Math.PI);
+    var ball = new Ball(50, 0, 2 * Math.PI);
 
     const render = () => {
       player.render();
@@ -91,6 +151,9 @@
     function step(timestamp) {
       render();
       animate(step);
+      ball.update();
+      ball.move();
+      collision(ball, player, computer);
     }
 
     window.addEventListener('keydown', function(event) {
@@ -108,7 +171,7 @@
      }
     });
 
-   window.onload = animate(step);
+    window.onload = animate(step);
 
     </script>
   </body>
