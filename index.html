@@ -75,7 +75,26 @@
     }
 
     Computer.prototype.update = function update(ball) {
-      
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+      var left_x = ball.x - 50;
+      var right_x = ball.x + 50;
+      var top_y = ball.y - 50;
+      var bottom_y = ball.y + 50;
+
+      if (bottom_y < canvas.height/2 && left_x > this.x + this.width && right_x < canvas.width/2) {
+        if (this.y > 0) {
+          this.move(-5);
+        } else if ((this.y + this.height)/2 <= 305) {
+          this.move(5);
+        }
+      } else if (bottom_y > canvas.height/2 && left_x > this.x + this.width && right_x < canvas.width/2) {
+        if ((this.y + this.height)/2 > 305) {
+          this.move(-5);
+        } else if (this.y < 460) {
+          this.move(5);
+        }
+      }
     }
 
     Ball.prototype.render = function render() {
@@ -158,6 +177,7 @@
       ball.update();
       ball.move();
       collision(ball, player, computer);
+      computer.update(ball);
     }
 
     window.addEventListener('keydown', function(event) {
@@ -166,11 +186,11 @@
      ctx.clearRect(0, 0, 1000, 610);
      if (keyName === "ArrowDown") {
        if (player.y < 460) {
-         player.move(10);
+         player.move(20);
        }
      } else if (keyName === "ArrowUp") {
        if (player.y > 0) {
-         player.move(-10);
+         player.move(-20);
        }
      }
     });
