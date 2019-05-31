@@ -9,11 +9,20 @@
     </style>
   </head>
   <body>
-    <canvas id="myCanvas" width="1000" height="610" style="border-style:dashed; margin: 35px auto; display:block;"></canvas>
-
+    <div style="position:relative; top:20px; left:210px;">
+      <div style="display:inline-block; position:relative;"><strong>Computer Score:</strong></div>
+      <div style="display:inline-block;" id="computerSide"></div>
+      <div style="position:relative; left: 900px; bottom: 18px;">
+        <div style="display:inline-block;"><strong>Player Score:</strong></div>
+        <div style="display:inline-block;" id="playerSide"></div>
+      </div>
+    </div>
+    <canvas id="myCanvas" width="1000" height="610" style="border-style:dashed; margin:35px auto; display:block;"></canvas>
     <script>
 
     var canvas = document.getElementById('myCanvas');
+    let playerScore = 0;
+    let computerScore = 0;
 
     class Paddle {
       constructor(x, y, width, height, speed) {
@@ -118,6 +127,9 @@
       ctx.clearRect(0, 0, 1000, 610);
       render();
 
+      var playerScoreTotal = document.getElementById('playerSide');
+      var computerScoreTotal = document.getElementById('computerSide');
+
       var num = Math.floor(Math.random()*7) + 1;
       num *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
 
@@ -125,9 +137,17 @@
           this.y + this.vy < 35) {
             this.vy = -this.vy;
       }
-
-      if (this.x + this.vx > canvas.width ||
-        this.x + this.vx < 0) {
+     
+      if (this.x + this.vx > canvas.width) {
+        computerScore += 1;
+        computerScoreTotal.innerHTML = computerScore;
+        this.x = 500;
+        this.y = 305;
+        this.vx = num;
+        this.vy = num;
+      } else if (this.x + this.vx < 0) {
+        playerScore += 1;
+        playerScoreTotal.innerHTML = playerScore;
           this.x = 500;
           this.y = 305;
           this.vx = num;
