@@ -9,15 +9,21 @@
     </style>
   </head>
   <body>
-    <div style="position:relative; top:20px; left:210px;">
-      <div style="display:inline-block; position:relative;"><strong>Computer Score:</strong></div>
-      <div style="display:inline-block;" id="computerSide"></div>
-      <div style="position:relative; left: 900px; bottom: 18px;">
+    <div style="width: 70%; margin: 0 auto;">
+      <div style="display:inline-block;">
+        <div style="display:inline-block;"><strong>Computer Score:</strong></div>
+        <div style="display:inline-block;" id="computerSide"></div>
+      </div>
+      <div style="display:inline-block; margin-left: 200px; padding-right: 10px;">
+        <h3 style="visibility: hidden; display:inline-block;" id="winMessage">You won!</h3>
+        <h4 style="visibility: hidden; display:inline-block; padding-left: 10px; color:blue;" id="restartMessage">Refresh your browser to play again.</h4>
+      </div>
+      <div style="display:inline-block; margin-left: 200px">
         <div style="display:inline-block;"><strong>Player Score:</strong></div>
         <div style="display:inline-block;" id="playerSide"></div>
       </div>
     </div>
-    <canvas id="myCanvas" width="1000" height="610" style="border-style:dashed; margin:35px auto; display:block;"></canvas>
+    <canvas id="myCanvas" width="1000" height="610" style="border-style:dashed; margin:5px auto; display:block;"></canvas>
     <script>
 
     var canvas = document.getElementById('myCanvas');
@@ -121,6 +127,11 @@
       this.y += this.vy;
     }
 
+    Ball.prototype.stop = function stop() {
+      this.vx = 0;
+      this.vy = 0;
+    }
+
     Ball.prototype.move = function move() {
       var canvas = document.getElementById("myCanvas");
       var ctx = canvas.getContext('2d');
@@ -128,7 +139,12 @@
       render();
 
       var playerScoreTotal = document.getElementById('playerSide');
+      playerScoreTotal.innerHTML = playerScore;
       var computerScoreTotal = document.getElementById('computerSide');
+      computerScoreTotal.innerHTML = computerScore;
+
+      var winMessage = document.getElementById('winMessage');
+      var restartMessage = document.getElementById('restartMessage');
 
       var num = Math.floor(Math.random()*7) + 1;
       num *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
@@ -138,6 +154,25 @@
             this.vy = -this.vy;
       }
      
+      if (playerScore === 11 ) {
+        this.stop();
+        winMessage.style.visibility = "visible";
+        restartMessage.style.visibility = "visible";
+        playerScore = 0;
+        playerScoreTotal.innerHTML = playerScore;
+        computerScore = 0;
+        computerScoreTotal.innerHTML = computerScore;
+      } else if (computerScore === 11) {
+        this.stop();
+        winMessage.innerHTML = "You lost...";
+        winMessage.style.visibility = "visible";
+        restartMessage.style.visibility = "visible";
+        playerScore = 0;
+        playerScoreTotal.innerHTML = playerScore;
+        computerScore = 0;
+        computerScoreTotal.innerHTML = computerScore;
+      }
+
       if (this.x + this.vx > canvas.width) {
         computerScore += 1;
         computerScoreTotal.innerHTML = computerScore;
