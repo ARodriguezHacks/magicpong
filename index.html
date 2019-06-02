@@ -18,7 +18,7 @@
         <h3 style="visibility: hidden; display:inline-block;" id="winMessage">You won!</h3>
         <h4 style="visibility: hidden; display:inline-block; padding-left: 10px; color:blue;" id="restartMessage">Refresh your browser to play again.</h4>
       </div>
-      <div style="display:inline-block; margin-left: 200px">
+      <div style="display:inline-block; margin-left: 180px">
         <div style="display:inline-block;"><strong>Player Score:</strong></div>
         <div style="display:inline-block;" id="playerSide"></div>
       </div>
@@ -154,7 +154,7 @@
             this.vy = -this.vy;
       }
      
-      if (playerScore === 11 ) {
+      if (playerScore === 5 ) {
         this.stop();
         winMessage.style.visibility = "visible";
         restartMessage.style.visibility = "visible";
@@ -162,7 +162,7 @@
         playerScoreTotal.innerHTML = playerScore;
         computerScore = 0;
         computerScoreTotal.innerHTML = computerScore;
-      } else if (computerScore === 11) {
+      } else if (computerScore === 5) {
         this.stop();
         winMessage.innerHTML = "You lost...";
         winMessage.style.visibility = "visible";
