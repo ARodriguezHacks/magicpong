@@ -35,7 +35,7 @@ The moment you open the index.html in your browser, the ball will immediately st
 
 When the game ends the computer and player scores are reset to 0, and a Win or Loss message appears depending on the Computer or Player winner.
 
-Sample Code
+## Sample Code
 
 The sample below demonstrates a portion of the Ball object's move method. The move method first grabs the HTML canvas element's context through a DOM selector method. Next the variable that is assigned the canvas' context calls on its clearRect() method to clear the canvas to support animation of the ball moving. Then the render() method is called which includes calling various methods to render the two paddles, the ball so that the browser upon loading has everything working and rendering properly. 
 
