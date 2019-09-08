@@ -5,7 +5,7 @@ Magic Pong is a modern take on the classic game of Pong. Built with pure Vanilla
 
 Magic Pong makes use of the HTML5 Canvas element to render the paddles and the ball and to allow animation to take place.
 
-![Magic Pong New](public/assets/imgs/magicpong-onload.png)
+![Magic Pong New](public/assets/imgs/magicpongupdate-start.png)
 
 # Viewing the Project
 
@@ -29,7 +29,7 @@ or
 
 Now you can open your index.html file in your browser and the game will immediately start. All you do now is move the up and down arrow keys to control the right paddle and try to beat the Computer!
 
-![Magic Pong Video](https://gph.is/g/ZkNqjNP)
+![Magic Pong Video](https://media.giphy.com/media/ZEqXCmtPKcHzI4zOOF/giphy.gif)
 
 The moment you open the index.html in your browser, the ball will immediately start moving and the game will commence. Within the indx.html you can adjust the values for various items including ball velocity, player and computer velocities, and score limit.
 
@@ -41,7 +41,7 @@ The sample below demonstrates a portion of the Ball object's move method. The mo
 
 The code also demonstrates that when the Player's score reaches 11, the Ball object will call on its stop method to stop itself from moving, and a hidden HTML element will appear on the screen with a "You won!" message. Then both paddles will be reset to 0.
 
-![Magic Pong Won](public/assets/imgs/newmagicpong-won.png)
+![Magic Pong Won](public/assets/imgs/magicpongupdate-won.png)
 
 index.html
 ```
@@ -70,7 +70,7 @@ index.html
    
 ```
 
-![Magic Pong 1](public/assets/imgs/newmagicpong-1.png)
+![Magic Pong 1](public/assets/imgs/magicpongupdate-1.png)
 
 ## Technologies Used:
 
@@ -80,6 +80,6 @@ index.html
 
 ## Additional Screenshots:
 
-![Magic Pong 2](public/assets/imgs/newmagicpong-2.png)
+![Magic Pong 2](public/assets/imgs/magicpongupdate-2.png)
 
-![Magic Pong 3](public/assets/imgs/newmagicpong-3.png)
+![Magic Pong 3](public/assets/imgs/magicpongupdate-3.png)
