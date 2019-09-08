@@ -5,7 +5,7 @@ Magic Pong is a modern take on the classic game of Pong. Built with pure Vanilla
 
 Magic Pong makes use of the HTML5 Canvas element to render the paddles and the ball and to allow animation to take place.
 
-![Magic Pong](https://media.giphy.com/media/yMAxt772CnNbnpAkDk/giphy.gif)
+![Magic Pong New](public/assets/imgs/magicpong-onload.png)
 
 # Viewing the Project
 
@@ -29,7 +29,7 @@ or
 
 Now you can open your index.html file in your browser and the game will immediately start. All you do now is move the up and down arrow keys to control the right paddle and try to beat the Computer!
 
-![Alt Text](https://media.giphy.com/media/5hkrckeTl8QVDi18ow/giphy.gif)
+![Magic Pong Video](https://gph.is/g/ZkNqjNP)
 
 The moment you open the index.html in your browser, the ball will immediately start moving and the game will commence. Within the indx.html you can adjust the values for various items including ball velocity, player and computer velocities, and score limit.
 
@@ -40,6 +40,8 @@ When the game ends the computer and player scores are reset to 0, and a Win or L
 The sample below demonstrates a portion of the Ball object's move method. The move method first grabs the HTML canvas element's context through a DOM selector method. Next the variable that is assigned the canvas' context calls on its clearRect() method to clear the canvas to support animation of the ball moving. Then the render() method is called which includes calling various methods to render the two paddles, the ball so that the browser upon loading has everything working and rendering properly. 
 
 The code also demonstrates that when the Player's score reaches 11, the Ball object will call on its stop method to stop itself from moving, and a hidden HTML element will appear on the screen with a "You won!" message. Then both paddles will be reset to 0.
+
+![Magic Pong Won](public/assets/imgs/newmagicpong-won.png)
 
 index.html
 ```
@@ -68,7 +70,7 @@ index.html
    
 ```
 
-![Magic Pong](public/assets/imgs/magicpong-img5.png)
+![Magic Pong 1](public/assets/imgs/newmagicpong-1.png)
 
 ## Technologies Used:
 
@@ -78,6 +80,6 @@ index.html
 
 ## Additional Screenshots:
 
-![Magic Pong](public/assets/imgs/magicpong-img1.png)
+![Magic Pong 2](public/assets/imgs/newmagicpong-2.png)
 
-![Magic Pong](public/assets/imgs/magicpong-img2.png)
+![Magic Pong 3](public/assets/imgs/newmagicpong-3.png)
