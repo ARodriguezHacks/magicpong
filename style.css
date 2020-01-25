@@ -1,0 +1,53 @@
+html {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color:rgba(127,255,212,0.3);
+}
+
+body {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+h3, h5, p {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#magic-pong-header {
+  font-family: 'Anton', sans-serif;
+  font-size: 30px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.modal-content {
+  text-align: center;
+  background-color: #f0efe5;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+ }
+
+ button {
+   width: 10%;
+   padding: 3% 0;
+   font-family: Verdana, Geneva, Tahoma, sans-serif;
+   font-size: 16px;
+   background-color: aquamarine;
+ }
+
+ button:hover {
+   cursor: pointer;
+ }
