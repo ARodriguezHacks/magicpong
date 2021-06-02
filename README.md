@@ -9,7 +9,7 @@ Magic Pong makes use of the HTML5 Canvas element to render the paddles and the b
 
 # Viewing the Project
 
-A demo of Magic Pong can be viewed on Heroku: https://magic-pong-game.herokuapp.com/
+A demo of Magic Pong can be viewed on Heroku: https://magic-pong.netlify.app/
 
 # Getting Started
 
